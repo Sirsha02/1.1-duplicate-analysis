@@ -1,3 +1,4 @@
+#takes only highest number
 import pandas as pd
 
 def check_numbers_between(input_file):
@@ -5,8 +6,8 @@ def check_numbers_between(input_file):
 
     for sheet_name, sheet_data in df.items():
         # Assuming the column with comma-separated numbers is named 'Area1'
-        if 'Area' in sheet_data.columns:
-            numbers_column = sheet_data['Area']
+        if 'Area' in sheet_data.columns:  #excel heading of metabolite column & Area
+            numbers_column = sheet_data['Area'] #excel heading of metabolite column & Area
             
             # Create a new column for the matched numbers
             sheet_data['Area_inrange'] = ''
@@ -16,7 +17,7 @@ def check_numbers_between(input_file):
                 
                 # Assuming the cells with the two numbers are named 'Number1' and 'Number2'
                 number1 = sheet_data.loc[index, 'Mean'] #Mean is the Mean column
-                number2 = sheet_data.loc[index, 'Stdev'] #Area is the standard deviation column
+                number2 = sheet_data.loc[index, 'Stdev'] #Stdev is the standard deviation column
                 highest_number = float('-inf')  # Initialize with negative infinity
                 matched_numbers = []
                 
@@ -45,5 +46,5 @@ def check_numbers_between(input_file):
             sheet_data.to_excel(writer, sheet_name=sheet_name, index=False)
 
 # Usage example
-input_file = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sohini\IKPvsNISER\New folder\New folderIKP_1_.xlsx"
+input_file = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sohini\IKPvsNISER\New folder\New folderIKP_1_.xlsx" #This is output file too
 check_numbers_between(input_file)
