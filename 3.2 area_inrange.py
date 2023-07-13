@@ -16,7 +16,7 @@ def check_numbers_between(input_file):
                 number2 = row['Stdev']
 
                 # Assuming the column with comma-separated numbers is named 'Area'
-                numbers = str(sheet_data.at[index, 'AREA']).strip('[]')
+                numbers = str(sheet_data.at[index, 'AREA']).strip('[]') #excel heading of metabolite column & Area
                 matched_numbers = []
 
                 if ',' in numbers:
