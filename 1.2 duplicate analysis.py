@@ -43,7 +43,7 @@ def data_cleaning(dir1, dir2):  # input as a folder
             merged_df = merge_pos_neg(df1, df2)  # dictionary
 
             merged_name = (
-                r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina"
+                r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina" #folder path for output
                 + os.path.splitext(os.path.basename(file1))[0]
                 + "_merged.xlsx"
             )
@@ -63,7 +63,7 @@ def data_cleaning(dir1, dir2):  # input as a folder
                 output_dictionary[sheet] = output  # dictionary
 
             new_file_name = (
-                r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina"
+                r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina" #folder path output
                 + os.path.splitext(os.path.basename(file1))[0]
                 + "_diff.xlsx"
             )
@@ -129,21 +129,21 @@ def merge_pos_neg(dic_1, dic_2):
 
 def duplicate_analysis(per_sheet):
     df = per_sheet.dropna(how="all", axis=1)
-    df = df.sort_values("MB NAME")
+    df = df.sort_values("MB NAME") #excel heading of metabolite column & Area
     
-    df.loc[df['AREA'].apply(lambda x: isinstance(x, str)), 'AREA'] = np.nan
-    #numeric_df = df[pd.to_numeric(df['AREA'], errors='coerce').notnull()]
-    std_df = df.groupby("MB NAME")["AREA"].std().reset_index()
+    df.loc[df['AREA'].apply(lambda x: isinstance(x, str)), 'AREA'] = np.nan #excel heading of metabolite column & Area
+    #numeric_df = df[pd.to_numeric(df['AREA'], errors='coerce').notnull()] #excel heading of metabolite column & Area
+    std_df = df.groupby("MB NAME")["AREA"].std().reset_index() #excel heading of metabolite column & Area
     
-    df["z_score"] = df.groupby("MB NAME")["AREA"].transform(calculate_z_scores)
+    df["z_score"] = df.groupby("MB NAME")["AREA"].transform(calculate_z_scores) #excel heading of metabolite column & Area
     df["z_score"] = df["z_score"].fillna(0)
     df = df[abs(df["z_score"]) < 1.5]
 
     mean_df = (
-        df.groupby("MB NAME")
+        df.groupby("MB NAME") #excel heading of metabolite column & Area
         .agg(
-            AREA=("AREA", list),
-            n=("MB NAME", "size"),
+            AREA=("AREA", list), #excel heading of metabolite column & Area
+            n=("MB NAME", "size"), #excel heading of metabolite column & Area
             z_score=("z_score", list),
         )
         .reset_index()
@@ -161,6 +161,6 @@ def calculate_z_scores(group):
         return np.nan
 
 if __name__ == "__main__":
-    dir1 = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\POS"  # add the path file here to the folder that contains all the data files
-    dir2 = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\NEG"
+    dir1 = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\POS"  # positive folder  # add the path file here to the folder that contains all the data files
+    dir2 = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\NEG" #negative folder
     data_cleaning(dir1, dir2)
