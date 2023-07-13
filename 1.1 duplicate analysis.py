@@ -1,3 +1,4 @@
+#when pos neg in same file
 import pandas as pd
 import numpy as np
 import glob
@@ -17,7 +18,7 @@ def data_cleaning(dir):
         #merged_df = df #keep for single
         
         merged_name = (
-           r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina"
+           r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina" #output folder path
             + os.path.splitext(os.path.basename(file))[0]
             + "_merged.xlsx"
         )
@@ -34,7 +35,7 @@ def data_cleaning(dir):
             output_dictionary[sheet] = output
 
         new_file_name = (
-            r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina"
+            r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina" #output folder path
               + os.path.splitext(os.path.basename(file))[0]
               + "_diff.xlsx")
         
