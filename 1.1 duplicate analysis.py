@@ -12,17 +12,19 @@ def data_cleaning(dir):
         output_dictionary = {}
         
         df = pd.read_excel(file, sheet_name=None)
-        #merged_df = merge_pos_neg(df)
-        merged_df = df
+        
+        merged_df = merge_pos_neg(df) #keep for both posneg
+        #merged_df = df #keep for single
+        
         merged_name = (
            r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina"
             + os.path.splitext(os.path.basename(file))[0]
             + "_merged.xlsx"
         )
 
-        #with pd.ExcelWriter(merged_name, engine="xlsxwriter") as writer:
-         #   for sheet, df in merged_df.items():
-          #      df.to_excel(writer, sheet_name=sheet)
+        with pd.ExcelWriter(merged_name, engine="xlsxwriter") as writer:
+           for sheet, df in merged_df.items():
+              df.to_excel(writer, sheet_name=sheet)
 
         sheets = list(merged_df.keys())
 
@@ -68,21 +70,21 @@ def merge_pos_neg(dictionary):
 
 def duplicate_analysis(per_sheet):
     df = per_sheet.dropna(how="all", axis=1)
-    df = df.sort_values("Name")
+    df = df.sort_values("Metabolite Name") #excel heading of metabolite column & Area
     
-    df.loc[df['Area'].apply(lambda x: isinstance(x, str)), 'Area'] = np.nan
+    df.loc[df['Area'].apply(lambda x: isinstance(x, str)), 'Area'] = np.nan #excel heading of metabolite column & Area
     #numeric_df = df[pd.to_numeric(df['Area'], errors='coerce').notnull()]
-    std_df = df.groupby("Name")["Area"].std().reset_index()
+    std_df = df.groupby("Metabolite Name")["Area"].std().reset_index() #excel heading of metabolite column & Area
     
-    df["z_score"] = df.groupby("Name")["Area"].transform(calculate_z_scores)
+    df["z_score"] = df.groupby("Metabolite Name")["Area"].transform(calculate_z_scores) #excel heading of metabolite column & Area
     df["z_score"] = df["z_score"].fillna(0)
     df = df[abs(df["z_score"]) < 1.5]
 
     mean_df = (
-        df.groupby("Name")
+        df.groupby("Name") #excel heading of metabolite column & Area
         .agg(
-            Area=("Area", list),
-            n=("Name", "size"),
+            Area=("Area", list), #excel heading of metabolite column & Area
+            n=("Name", "size"), #excel heading of metabolite column & Area
             z_score=("z_score", list),
         )
         .reset_index()
@@ -100,5 +102,6 @@ def calculate_z_scores(group):
         return np.nan
 
 if __name__ == "__main__":
-    dir = r"C:\Users\Sirsha\Desktop\LAB WORK NISER\Sunaina"
+    dir = r"L:\Sohini Mukhopadhyay\MicrobioTx\30052023_NP" #Folder path
     data_cleaning(dir)
+    
