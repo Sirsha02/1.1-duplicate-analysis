@@ -43,16 +43,16 @@ for sheet_name in xls.sheet_names :
     #output = mean(input_data)
     #df['Area2_m'] = output
 
-    input_data = df['AREA'].tolist()
+    input_data = df['AREA'].tolist() #excel heading of metabolite column & Area
 
     output = mean(input_data)
-    df['Mean'] = output
+    df['Mean'] = output #heading for new column
 
 
     #Calculate standard deviation and return single values as is
     output_data = calculate_standard_deviation(input_data)
     # Add the output column to the DataFrame
-    df['Stdev'] = output_data
+    df['Stdev'] = output_data #heading for new column
 
     
     # Save the modified sheet to the output file with the same sheet name
