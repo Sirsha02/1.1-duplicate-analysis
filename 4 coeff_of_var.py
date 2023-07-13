@@ -7,11 +7,11 @@ def coeff_of_var(input_file):
     for sheet_name, sheet_data in df.items():
         # Assuming the column with comma-separated numbers is named 'Numbers'
         if 'Mean' in sheet_data.columns and 'Stdev' in sheet_data.columns:
-            mean = sheet_data['Mean1'].fillna(1)
-            stdev = sheet_data['Stdev1'].fillna(1)
+            mean = sheet_data['Mean1'].fillna(1) #mean or mean1
+            stdev = sheet_data['Stdev1'].fillna(1) #stdev or stdev1
 
             # Create a new column for the matched numbers
-            sheet_data['CV'] = ''
+            sheet_data['CV'] = '' #output column
             #df['CV'] = np.where((df['Mean1'].isna()) | (df['Stdev1'].isna()), 1, df['CV'])
             for index in mean.index:
                 if index in stdev.index:
