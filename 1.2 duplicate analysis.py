@@ -131,7 +131,7 @@ def merge_pos_neg(dic_1, dic_2):
 def duplicate_analysis(per_sheet):
     df = per_sheet.dropna(how="all", axis=1)
     df = df.sort_values("MB NAME") #excel heading of metabolite column & Area
-    
+    df["Name"] = df["Name"].str.lower()  # Convert names to lowercase for case-insensitive grouping
     df.loc[df['AREA'].apply(lambda x: isinstance(x, str)), 'AREA'] = np.nan #excel heading of metabolite column & Area
     #numeric_df = df[pd.to_numeric(df['AREA'], errors='coerce').notnull()] #excel heading of metabolite column & Area
     std_df = df.groupby("MB NAME")["AREA"].std().reset_index() #excel heading of metabolite column & Area
