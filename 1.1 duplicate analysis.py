@@ -69,7 +69,7 @@ def merge_pos_neg(dictionary):
 def duplicate_analysis(per_sheet):
     df = per_sheet.dropna(how="all", axis=1)
     df = df.sort_values("Name")
-    
+    df["Name"] = df["Name"].str.lower()  # Convert names to lowercase for case-insensitive grouping
     df.loc[df['Area'].apply(lambda x: isinstance(x, str)), 'Area'] = np.nan
     #numeric_df = df[pd.to_numeric(df['Area'], errors='coerce').notnull()]
     std_df = df.groupby("Name")["Area"].std().reset_index()
